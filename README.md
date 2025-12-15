@@ -8,83 +8,125 @@
 Projet réalisé dans le cadre du cursus **Holberton School**, ce dépôt
 contient une implémentation du shell appellé simple Shell.
 
-------------------------------------------------------------------------
+## Description
 
-## 📌 Table des matières
+Projet réalisé dans le cadre du cursus **Holberton School**, ce dépôt
+contient une implémentation du shell appellé simple Shell.
+
+## Flowchart
+
+![Flowchart]()
+
+## Objectives
 
 
-
-------------------------------------------------------------------------
-
-## 🧩 Description générale
-
-
-
-------------------------------------------------------------------------
-
-## 📁 Architecture du dépôt
-
-    
-
-------------------------------------------------------------------------
-
-## 🔧 Prérequis
+## Requirements
 
 
 
-------------------------------------------------------------------------
+- **GCC Compilation**
 
-## 🛠️ Compilation
 
-Compiler tous les fichiers :
+- **Betty Coding Style**
+  All code must strictly follow the **Betty style guidelines**, including:
+  - Betty-style formatting  
+  - Betty-style documentation  
+  - Proper function and file organization
 
-``` bash
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
-```
+- **Allowed Files**
 
-Exécuter :
 
-``` bash
+- **No Global Variables**
 
-```
 
-------------------------------------------------------------------------
+- **Code Organization**
 
-## 💡 Exemples d'utilisation
 
-``` c
+- **Minimum Required Features**
+ 
+
+- **Recommended Environment**
+
+
+## Prototype
+
+```c
 
 ```
 
-------------------------------------------------------------------------
+## Supported Specifiers
 
-## 🧭 Bonnes pratiques
+| Specifier | Description |
+|-----------|-------------|
+|  | |
+|  | |
+|  | |
+|  | |
+
+## Example Usage
+
+```c
+
+
+```
+
+## Output :
+
+```c
+
+```
+
+## Man Page
 
 
 
-------------------------------------------------------------------------
+### How to View the Man Page
 
-## 🤝 Contribuer
 
-Les contributions sont ouvertes !
 
-1.  Fork du projet\
-2.  Création d'une branche `feature/...` ou `fix/...`\
-3.  Commits propres et explicites\
-4.  Pull request détaillée
+```bash
 
-------------------------------------------------------------------------
+```
 
-## 📄 Licence
+## Use Betty and Valgrind
 
-Aucune licence explicite --- le dépôt est soumis au droit d'auteur par
-défaut.
+### Add permission
 
-------------------------------------------------------------------------
+```bash
+chmod u+x 
+```
 
-## 👤 Auteur
+### Betty Style 
+
+```bash
+betty 
+```
+
+### Valgrind
+
+```bash
+valgrind --leak-check=full 
+```
+
+## Compilation
+
+```bash
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o 
+```
+
+## Project Structure
+
+
+## Constraints
+
+
+## Auteur
 
 - [Lorenzo Anselme](https://github.com/lorenzoanselme)
 - [Ethane Zimmermann](https://github.com/ZimEthane)
 
 Projet créé par **lorenzoanselme** et **ZimEthane** dans le cadre de Holberton School.
+
+## License
+
+This project may be freely used and modified.
