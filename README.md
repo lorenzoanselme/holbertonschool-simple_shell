@@ -45,7 +45,7 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 Exécuter :
 
 ``` bash
-./binary_tree_test
+
 ```
 
 ------------------------------------------------------------------------
