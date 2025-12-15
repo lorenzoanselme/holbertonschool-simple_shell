@@ -1,4 +1,4 @@
-# holbertonschool-binary_trees
+# holbertonschool-simple_shell
 
 ![C Language](https://img.shields.io/badge/Language-C-blue.svg)
 ![Status](https://img.shields.io/badge/Project-Active-success.svg)
