@@ -5,9 +5,6 @@
 ![Holberton](https://img.shields.io/badge/Holberton-School-red.svg)
 ![License](https://img.shields.io/badge/License-Unspecified-lightgrey.svg)
 
-Projet réalisé dans le cadre du cursus **Holberton School**, ce dépôt
-contient une implémentation du shell appellé simple Shell.
-
 ## Description
 
 Projet réalisé dans le cadre du cursus **Holberton School**, ce dépôt
