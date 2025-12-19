@@ -6,7 +6,7 @@ main - UNIX command line interpreter*
 Return: Always 0*/
 int main(void)
 {
-	char line = NULL;
+	char line;
 	size_t len = 0;
 	ssize_t read;
 	pid_t pid;
