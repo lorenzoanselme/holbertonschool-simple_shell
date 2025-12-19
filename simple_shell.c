@@ -1,6 +1,10 @@
 #include "shell.h"
 
-extern char **environ;
+/**
+ * main - UNIX command line interpreter
+ *
+ * Return: Always 0
+ */
 
 int main(void)
 {
@@ -16,30 +20,24 @@ int main(void)
 		{
 			write(STDOUT_FILENO, "$ ", 2);
 		}
-
 		read = getline(&line, &len, stdin);
-
 		if (read == -1)
 		{
 			write(STDOUT_FILENO, "\n", 1);
 			break;
 		}
-
 		if (strcmp(&line, "\n") != 0)
 		{
 			pid = fork();
-
 			if (pid == -1)
 			{
 				perror("fork");
 				free(line);
 				exit(EXIT_FAILURE);
 			}
-
 			if (pid == 0)
 			{
 				char *argv[] = {line, NULL};
-
 				if (execv(line, argv) == -1)
 				{
 					write(STDERR_FILENO, "Error executing command\n", 24);
@@ -52,7 +50,6 @@ int main(void)
 			}
 		}
 	}
-
 	free(line);
 	return (0);
 }
