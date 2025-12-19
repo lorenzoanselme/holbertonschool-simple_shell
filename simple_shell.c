@@ -13,6 +13,8 @@ int main(void)
 	ssize_t read;
 	pid_t pid;
 	int resultFils;
+	char *argv[2];
+	char *envp[1];
 
 	while (1)
 	{
@@ -34,8 +36,11 @@ int main(void)
 		}
 		if (pid == 0)
 		{
-			char *argv[] = {line, NULL};
-			if (execve(line, argv, NULL) == -1)
+			argv[0] = line;
+			argv[1] = NULL;
+			envp[0] = NULL;
+
+			if (execve(line, argv, envp) == -1)
 			{
 				write(STDERR_FILENO, "No such file or directory\n", 28);
 				exit(EXIT_FAILURE);
