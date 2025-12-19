@@ -111,9 +111,11 @@ int main(int ac __attribute__((unused)), char **av, char **envp)
 			break;
 		}
 
+		char *cmd;
+
 		strip_newline(line);
-		line = trim_spaces(line);
-		if (line == NULL)
+		cmd = trim_spaces(line);
+		if (cmd == NULL)
 			continue;
 
 		pid = fork();
@@ -125,10 +127,10 @@ int main(int ac __attribute__((unused)), char **av, char **envp)
 
 		if (pid == 0)
 		{
-			argv_exec[0] = line;
+			argv_exec[0] = cmd;
 			argv_exec[1] = NULL;
 
-			execve(line, argv_exec, envp);
+			execve(cmd, argv_exec, envp);
 
 			if (errno == ENOENT || errno == EACCES)
 				print_not_found(av[0], line);
