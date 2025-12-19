@@ -1,10 +1,8 @@
 #include "shell.h"
 
-extern char **environ;
-
 /**
  * print_prompt - display prompt if interactive
- * @interactive: 1 if interactive, 0 otherwise
+ * @interactive: interactive mode flag
  */
 void print_prompt(int interactive)
 {
@@ -18,18 +16,16 @@ void print_prompt(int interactive)
  * @len: buffer size
  * @interactive: interactive mode
  *
- * Return: number of characters read or -1 on EOF
+ * Return: number of chars read or -1 on EOF
  */
 ssize_t read_input(char **line, size_t *len, int interactive)
 {
 	ssize_t nread;
 
 	nread = getline(line, len, stdin);
-	if (nread == -1)
-	{
-		if (interactive)
-			write(STDOUT_FILENO, "\n", 1);
-	}
+	if (nread == -1 && interactive)
+		write(STDOUT_FILENO, "\n", 1);
+
 	return (nread);
 }
 
@@ -38,14 +34,14 @@ ssize_t read_input(char **line, size_t *len, int interactive)
  * @line: input line
  * @argv: argument array
  *
- * Return: 1 if command ready, 0 otherwise
+ * Return: 1 if valid command, 0 otherwise
  */
 int prepare_command(char *line, char **argv)
 {
 	char *cmd;
 	char *arg;
 
-	if (line == NULL)
+	if (!line)
 		return (0);
 
 	if (line[strlen(line) - 1] == '\n')
@@ -72,28 +68,27 @@ int prepare_command(char *line, char **argv)
 	argv[0] = cmd;
 	argv[1] = arg;
 	argv[2] = NULL;
+
 	return (1);
 }
 
 /**
  * execute_command - fork and execute command
  * @argv: argument array
+ * @envp: environment
  */
-void execute_command(char **argv)
+void execute_command(char **argv, char **envp)
 {
 	pid_t pid;
 	int status;
 
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("fork");
 		return;
-	}
 
 	if (pid == 0)
 	{
-		execve(argv[0], argv, environ);
+		execve(argv[0], argv, envp);
 		write(STDERR_FILENO, argv[0], strlen(argv[0]));
 		write(STDERR_FILENO, ": not found\n", 12);
 		_exit(127);
@@ -104,10 +99,15 @@ void execute_command(char **argv)
 
 /**
  * main - UNIX command line interpreter
+ * @ac: argument count (unused)
+ * @av: argument vector (unused)
+ * @envp: environment
  *
  * Return: Always 0
  */
-int main(void)
+int main(int ac __attribute__((unused)),
+	 char **av __attribute__((unused)),
+	 char **envp)
 {
 	char *line = NULL;
 	size_t len = 0;
@@ -128,7 +128,7 @@ int main(void)
 		if (!prepare_command(line, argv))
 			continue;
 
-		execute_command(argv);
+		execute_command(argv, envp);
 	}
 
 	free(line);
