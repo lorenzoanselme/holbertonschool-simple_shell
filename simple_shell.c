@@ -17,9 +17,7 @@ int main(void)
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-		{
 			write(STDOUT_FILENO, "$ ", 2);
-		}
 
 		read = getline(&line, &len, stdin);
 		if (read == -1)
@@ -27,12 +25,6 @@ int main(void)
 			write(STDOUT_FILENO, "\n", 1);
 			break;
 		}
-
-		if (line[0] == '\n')
-		{
-			continue;
-		}
-
 		pid = fork();
 		if (pid == -1)
 		{
@@ -40,18 +32,15 @@ int main(void)
 			free(line);
 			exit(EXIT_FAILURE);
 		}
-
 		if (pid == 0)
 		{
 			char *argv[] = {line, NULL};
-
 			if (execve(line, argv, NULL) == -1)
 			{
 				write(STDERR_FILENO, "No such file or directory\n", 28);
 				exit(EXIT_FAILURE);
 			}
 		}
-
 		else
 		{
 			waitpid(pid, &resultFils, 0);
