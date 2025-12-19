@@ -17,7 +17,7 @@ static void print_prompt(int interactive)
 }
 
 /**
- * strip_newline - replace trailing '\n' by '\0' if present
+ * strip_newline - replace trailing '\n' by '\0'
  * @s: input string
  */
 static void strip_newline(char *s)
@@ -33,9 +33,40 @@ static void strip_newline(char *s)
 }
 
 /**
- * print_not_found - print a simple error message to stderr
- * @shell_name: argv[0] of the shell
- * @cmd: command entered by the user
+ * trim_spaces - remove leading and trailing spaces/tabs
+ * @line: input string
+ *
+ * Return: pointer to trimmed string, or NULL if empty
+ */
+static char *trim_spaces(char *line)
+{
+	char *start;
+	char *end;
+
+	if (line == NULL)
+		return (NULL);
+
+	start = line;
+	while (*start == ' ' || *start == '\t')
+		start++;
+
+	if (*start == '\0')
+		return (NULL);
+
+	end = start + strlen(start) - 1;
+	while (end > start && (*end == ' ' || *end == '\t'))
+	{
+		*end = '\0';
+		end--;
+	}
+
+	return (start);
+}
+
+/**
+ * print_not_found - print error message
+ * @shell_name: name of shell
+ * @cmd: command
  */
 static void print_not_found(const char *shell_name, const char *cmd)
 {
@@ -49,10 +80,10 @@ static void print_not_found(const char *shell_name, const char *cmd)
 }
 
 /**
- * main - simple shell (no PATH, no args, no builtins)
+ * main - simple shell 0.1
  * @ac: argument count (unused)
- * @av: argument vector (av[0] is shell name)
- * @envp: environment variables (must be passed to execve)
+ * @av: argument vector
+ * @envp: environment
  *
  * Return: 0
  */
@@ -81,7 +112,8 @@ int main(int ac __attribute__((unused)), char **av, char **envp)
 		}
 
 		strip_newline(line);
-		if (line[0] == '\0')
+		line = trim_spaces(line);
+		if (line == NULL)
 			continue;
 
 		pid = fork();
