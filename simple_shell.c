@@ -96,6 +96,7 @@ int main(int ac __attribute__((unused)), char **av, char **envp)
 	pid_t pid;
 	int status;
 	char *argv_exec[2];
+	char *cmd;
 
 	interactive = isatty(STDIN_FILENO);
 
@@ -110,8 +111,6 @@ int main(int ac __attribute__((unused)), char **av, char **envp)
 				(void)write(STDOUT_FILENO, "\n", 1);
 			break;
 		}
-
-		char *cmd;
 
 		strip_newline(line);
 		cmd = trim_spaces(line);
