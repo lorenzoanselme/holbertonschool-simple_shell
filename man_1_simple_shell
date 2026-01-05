@@ -1,0 +1,77 @@
+.TH simple_shell 1 "Jan 2026" "v1.0" "User Commands"
+.SH NAME
+simple_shell \- simple UNIX command interpreter
+.SH SYNOPSIS
+.B simple_shell
+[\fIcommand\fR]
+.SH DESCRIPTION
+The
+.B simple_shell
+program is a simplified UNIX command interpreter written in C. It reads
+lines from standard input (interactive mode) or from a pipe/file (non-interactive
+mode), parses them, and executes the corresponding commands.
+
+It supports basic command execution, environment handling, and built-in
+commands. This implementation was created as part of the Holberton School
+curriculum to understand internal shell behavior, process creation,
+and environment handling. :contentReference[oaicite:1]{index=1}
+
+.TP
+.B Interactive mode
+Displays a prompt "$ " and waits for the user to enter commands.
+.TP
+.B Non-interactive mode
+Reads commands from standard input (e.g., via echo or a file redirection)
+and executes them sequentially.
+
+.SH BUILT-IN COMMANDS
+The following built-ins are supported:
+
+.TP
+.B exit
+Exits the shell. If an argument is provided (e.g., exit 3), it returns
+that as the exit status.
+.TP
+.B env
+Prints the current environment variables.
+
+.SH USAGE
+In interactive mode:
+
+.nf
+$ ./simple_shell
+$ ls -l
+$ env
+$ exit
+.fi
+
+In non-interactive mode:
+
+.nf
+echo "ls -la" | ./simple_shell
+.fi
+
+.SH EXIT STATUS
+Upon successful execution of a command, the exit status of the last process
+is returned.
+
+If a command is not found, the shell prints an error message similar
+to:
+
+.nf
+./hsh: 1: command: not found
+.fi
+
+.SH ERRORS
+The behavior is undefined if:
+
+.IP \[bu]
+Memory allocation fails.
+.IP \[bu]
+Input exceeds the maximum supported length.
+
+.SH SEE ALSO
+sh(1), bash(1)
+
+.SH AUTHOR
+Lorenzo Anselme and Ethane Zimmermann
