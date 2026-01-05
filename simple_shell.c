@@ -178,8 +178,10 @@ int prepare_command(char *line, char **argv)
  * execute_command - fork and execute command
  * @argv: argument array
  * @envp: environment
+ *
+ * Return: exit status of the executed command
  */
-void execute_command(char **argv, char **envp)
+int execute_command(char **argv, char **envp)
 {
 	pid_t pid;
 	int status;
@@ -189,14 +191,14 @@ void execute_command(char **argv, char **envp)
 	if (!cmd_path)
 	{
 		print_not_found(argv[0]);
-		return;
+		return (127);
 	}
 
 	pid = fork();
 	if (pid == -1)
 	{
 		free(cmd_path);
-		return;
+		return (1);
 	}
 
 	if (pid == 0)
@@ -207,6 +209,11 @@ void execute_command(char **argv, char **envp)
 
 	waitpid(pid, &status, 0);
 	free(cmd_path);
+
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+
+	return (1);
 }
 
 /**
@@ -215,7 +222,7 @@ void execute_command(char **argv, char **envp)
  * @av: argument vector (unused)
  * @envp: environment
  *
- * Return: Always 0
+ * Return: exit status of the last executed command
  */
 int main(int ac __attribute__((unused)),
 		 char **av __attribute__((unused)),
@@ -226,6 +233,7 @@ int main(int ac __attribute__((unused)),
 	ssize_t nread;
 	int interactive;
 	char *argv[MAX_ARGS];
+	int last_status = 0;
 
 	g_progname = (av && av[0]) ? av[0] : "hsh";
 	interactive = isatty(STDIN_FILENO);
@@ -243,9 +251,9 @@ int main(int ac __attribute__((unused)),
 
 		g_cmd_count++;
 
-		execute_command(argv, envp);
+		last_status = execute_command(argv, envp);
 	}
 
 	free(line);
-	return (0);
+	return (last_status);
 }
