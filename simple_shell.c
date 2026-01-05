@@ -1,5 +1,47 @@
 #include "shell.h"
 
+static char *g_progname;
+static unsigned long g_cmd_count = 0;
+
+/**
+ * print_not_found - print formatted "not found" error
+ * format: <progname>: <count>: <cmd>: not found
+ * @cmd: command name
+ */
+void print_not_found(char *cmd)
+{
+	char buf[32];
+	char tmp[32];
+	int n = 0, t = 0;
+	unsigned long x = g_cmd_count;
+
+	if (!g_progname)
+		g_progname = "hsh";
+
+	write(STDERR_FILENO, g_progname, strlen(g_progname));
+	write(STDERR_FILENO, ": ", 2);
+
+	if (x == 0)
+	{
+		buf[n++] = '0';
+	}
+	else
+	{
+		while (x > 0)
+		{
+			tmp[t++] = '0' + (x % 10);
+			x /= 10;
+		}
+		while (t > 0)
+			buf[n++] = tmp[--t];
+	}
+	write(STDERR_FILENO, buf, n);
+
+	write(STDERR_FILENO, ": ", 2);
+	write(STDERR_FILENO, cmd, strlen(cmd));
+	write(STDERR_FILENO, ": not found\n", 12);
+}
+
 /**
  * get_path - retrieve PATH from environment
  * @envp: environment variables
@@ -8,6 +50,9 @@
 char *get_path(char **envp)
 {
 	int i = 0;
+
+	if (!envp)
+		return (NULL);
 
 	while (envp[i])
 	{
@@ -143,8 +188,7 @@ void execute_command(char **argv, char **envp)
 	cmd_path = find_command(argv[0], envp);
 	if (!cmd_path)
 	{
-		write(STDERR_FILENO, argv[0], strlen(argv[0]));
-		write(STDERR_FILENO, ": not found\n", 12);
+		print_not_found(argv[0]);
 		return;
 	}
 
@@ -183,6 +227,7 @@ int main(int ac __attribute__((unused)),
 	int interactive;
 	char *argv[MAX_ARGS];
 
+	g_progname = (av && av[0]) ? av[0] : "hsh";
 	interactive = isatty(STDIN_FILENO);
 
 	while (1)
@@ -195,6 +240,8 @@ int main(int ac __attribute__((unused)),
 
 		if (!prepare_command(line, argv))
 			continue;
+
+		g_cmd_count++;
 
 		execute_command(argv, envp);
 	}
