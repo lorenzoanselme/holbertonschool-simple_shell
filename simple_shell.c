@@ -43,6 +43,22 @@ void print_not_found(char *cmd)
 }
 
 /**
+ * print_env - print current environment variables
+ * @envp: environment variables
+ */
+void print_env(char **envp)
+{
+	int i = 0;
+
+	while (envp && envp[i])
+	{
+		write(STDOUT_FILENO, envp[i], strlen(envp[i]));
+		write(STDOUT_FILENO, "\n", 1);
+		i++;
+	}
+}
+
+/**
  * get_path - retrieve PATH from environment
  * @envp: environment variables
  * Return: PATH string or NULL if not found
@@ -253,6 +269,13 @@ int main(int ac __attribute__((unused)),
 		{
 			free(line);
 			exit(last_status);
+		}
+
+		if (strcmp(argv[0], "env") == 0)
+		{
+			print_env(envp);
+			last_status = 0;
+			continue;
 		}
 
 		g_cmd_count++;
