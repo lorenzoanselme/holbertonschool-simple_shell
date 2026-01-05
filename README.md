@@ -1,129 +1,176 @@
 # holbertonschool-simple_shell
 
 ![C Language](https://img.shields.io/badge/Language-C-blue.svg)
-![Status](https://img.shields.io/badge/Project-Active-success.svg)
+![Status](https://img.shields.io/badge/Project-Completed-success.svg)
 ![Holberton](https://img.shields.io/badge/Holberton-School-red.svg)
-![License](https://img.shields.io/badge/License-Unspecified-lightgrey.svg)
 
 ## Description
 
-Projet réalisé dans le cadre du cursus **Holberton School**, ce dépôt
-contient une implémentation du shell appellé simple Shell.
+**simple_shell** is a simplified implementation of a UNIX command line interpreter written in C, developed as part of the **Holberton School** curriculum.
+
+The goal of this project is to understand how a shell works internally, including:
+- reading user input
+- parsing command lines
+- process creation and execution
+- environment handling
+- implementation of built-in commands
+
+The shell works in both **interactive** and **non-interactive** modes.
+
+---
 
 ## Flowchart
 
-![Flowchart]()
+A flowchart describing the global logic of the shell is available in the repository.
+
+---
 
 ## Objectives
 
+- Understand the internal behavior of a UNIX shell
+- Work with system calls such as `fork`, `execve`, and `wait`
+- Manage environment variables
+- Implement basic built-in commands
+- Write clean, well-structured, and memory-safe C code
+
+---
 
 ## Requirements
 
+### Compilation
 
+- Compiler: **GCC**
+- Mandatory flags:
+  ```bash
+  -Wall -Werror -Wextra -pedantic -std=gnu89
+  ```
 
-- **GCC Compilation**
+### Coding Style
 
+- All code follows the **Betty Coding Style**
+- All functions are properly documented
 
-- **Betty Coding Style**
-  All code must strictly follow the **Betty style guidelines**, including:
-  - Betty-style formatting  
-  - Betty-style documentation  
-  - Proper function and file organization
+### Constraints
 
-- **Allowed Files**
+- Only allowed system calls and functions may be used
+- No use of `system()`
+- No advanced features (pipes, redirections, etc.)
+- No memory leaks
 
+---
 
-- **No Global Variables**
+## Features Implemented
 
+### Simple shell 0.1
 
-- **Code Organization**
+- Display a prompt `$ ` in interactive mode
+- Read and execute user commands
+- Handle `Ctrl + D` (EOF)
 
+### Simple shell 0.2
 
-- **Minimum Required Features**
- 
+- Handle the `PATH` environment variable
+- Search for executables in PATH directories
+- Do **not** call `fork()` if the command does not exist
+- Print formatted error messages:
+  ```text
+  ./hsh: 1: command: not found
+  ```
 
-- **Recommended Environment**
+### Simple shell 0.3
 
+- Implement the `exit` built-in command
+- Exit the shell without arguments
+- Return the last command exit status
 
-## Prototype
+### Simple shell 0.4
 
-```c
+- Implement the `env` built-in command
+- Print the current environment
+- Execute without forking
 
-```
+---
 
-## Supported Specifiers
+## Built-ins Supported
 
-| Specifier | Description |
-|-----------|-------------|
-|  | |
-|  | |
-|  | |
-|  | |
+| Command | Description |
+|--------|-------------|
+| `exit` | Exit the shell |
+| `env`  | Print the environment |
+
+---
 
 ## Example Usage
 
-```c
-
-
-```
-
-## Output :
-
-```c
-
-```
-
-## Man Page
-
-
-
-### How to View the Man Page
-
-
+### Interactive mode
 
 ```bash
-
+$ ./hsh
+$ ls -l
+$ env
+$ exit
 ```
 
-## Use Betty and Valgrind
-
-### Add permission
+### Non-interactive mode
 
 ```bash
-chmod u+x 
+echo "ls -la" | ./hsh
 ```
 
-### Betty Style 
-
-```bash
-betty 
-```
-
-### Valgrind
-
-```bash
-valgrind --leak-check=full 
-```
+---
 
 ## Compilation
 
 ```bash
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o 
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 ```
+
+---
+
+## Memory Check
+
+```bash
+valgrind --leak-check=full ./hsh
+```
+
+No memory leaks detected.
+
+---
 
 ## Project Structure
 
+```
+.
+├── hsh
+├── shell.h
+├── simple_shell.c
+├── README.md
+```
 
-## Constraints
+---
 
+## Limitations
 
-## Auteur
+- No pipes (`|`)
+- No redirections (`>`, `<`)
+- No quote handling (`'`, `"`)
+- No shell variables
+- No auto-completion
 
-- [Lorenzo Anselme](https://github.com/lorenzoanselme)
-- [Ethane Zimmermann](https://github.com/ZimEthane)
+---
 
-Projet créé par **lorenzoanselme** et **ZimEthane** dans le cadre de Holberton School.
+## Authors
+
+- **Lorenzo Anselme**
+  - GitHub: https://github.com/lorenzoanselme
+- **Ethane Zimmermann**
+  - GitHub: https://github.com/ZimEthane
+
+Project developed as part of the **Holberton School** curriculum.
+
+---
 
 ## License
 
-This project may be freely used and modified.
+This project is free to use for educational purposes.
+
