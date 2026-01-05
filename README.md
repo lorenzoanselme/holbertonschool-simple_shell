@@ -24,7 +24,7 @@ The shell works in both **interactive** and **non-interactive** modes.
 
 A flowchart describing the global logic of the shell is available in the repository.
 
-![Flowchart](../holbertonschool-simple_shell/flowchart_simpleShell.pdf)
+📄 [View the flowchart (PDF)](flowchart_simpleShell.pdf)
 
 ---
 
