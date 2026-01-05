@@ -69,3 +69,4 @@ char *find_command(char *cmd, char **envp)
 
 	free(path_copy);
 	return (NULL);
+}
