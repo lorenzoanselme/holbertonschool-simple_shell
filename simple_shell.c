@@ -42,8 +42,10 @@ char *find_command(char *cmd, char **envp)
 		return (NULL);
 
 	path_copy = strdup(path);
-	dir = strtok(path_copy, ":");
+	if (!path_copy)
+		return (NULL);
 
+	dir = strtok(path_copy, ":");
 	while (dir)
 	{
 		full_path = malloc(strlen(dir) + strlen(cmd) + 2);
@@ -96,7 +98,7 @@ ssize_t read_input(char **line, size_t *len, int interactive)
 }
 
 /**
- * prepare_command - trim spaces and split command/arg
+ * prepare_command - split line into arguments
  * @line: input line
  * @argv: argument array
  *
@@ -104,38 +106,27 @@ ssize_t read_input(char **line, size_t *len, int interactive)
  */
 int prepare_command(char *line, char **argv)
 {
-	char *cmd;
-	char *arg;
+	int argc = 0;
+	char *token;
 
 	if (!line)
+		return (0);
+
+	if (line[0] == '\n')
 		return (0);
 
 	if (line[strlen(line) - 1] == '\n')
 		line[strlen(line) - 1] = '\0';
 
-	cmd = line;
-	while (*cmd == ' ' || *cmd == '\t')
-		cmd++;
-
-	if (*cmd == '\0')
-		return (0);
-
-	arg = strchr(cmd, ' ');
-	if (arg)
+	token = strtok(line, " \t");
+	while (token && argc < (MAX_ARGS - 1))
 	{
-		*arg = '\0';
-		arg++;
-		while (*arg == ' ' || *arg == '\t')
-			arg++;
-		if (*arg == '\0')
-			arg = NULL;
+		argv[argc++] = token;
+		token = strtok(NULL, " \t");
 	}
+	argv[argc] = NULL;
 
-	argv[0] = cmd;
-	argv[1] = arg;
-	argv[2] = NULL;
-
-	return (1);
+	return (argc > 0);
 }
 
 /**
@@ -190,7 +181,7 @@ int main(int ac __attribute__((unused)),
 	size_t len = 0;
 	ssize_t nread;
 	int interactive;
-	char *argv[3];
+	char *argv[MAX_ARGS];
 
 	interactive = isatty(STDIN_FILENO);
 
