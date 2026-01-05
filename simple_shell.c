@@ -249,6 +249,12 @@ int main(int ac __attribute__((unused)),
 		if (!prepare_command(line, argv))
 			continue;
 
+		if (strcmp(argv[0], "exit") == 0)
+		{
+			free(line);
+			exit(last_status);
+		}
+
 		g_cmd_count++;
 
 		last_status = execute_command(argv, envp);
