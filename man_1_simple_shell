@@ -13,24 +13,25 @@ mode), parses them, and executes the corresponding commands.
 
 It supports basic command execution, environment handling, and built-in
 commands. This implementation was created as part of the Holberton School
-curriculum to understand internal shell behavior, process creation,
-and environment handling. :contentReference[oaicite:1]{index=1}
+curriculum to better understand internal shell behavior, process creation,
+and environment management.
 
 .TP
 .B Interactive mode
 Displays a prompt "$ " and waits for the user to enter commands.
 .TP
 .B Non-interactive mode
-Reads commands from standard input (e.g., via echo or a file redirection)
+Reads commands from standard input (for example, via echo or file redirection)
 and executes them sequentially.
 
 .SH BUILT-IN COMMANDS
-The following built-ins are supported:
+The following built-in commands are supported:
 
 .TP
 .B exit
-Exits the shell. If an argument is provided (e.g., exit 3), it returns
-that as the exit status.
+Exits the shell. If an argument is provided (for example, "exit 3"), the shell
+returns that value as the exit status.
+
 .TP
 .B env
 Prints the current environment variables.
@@ -39,7 +40,7 @@ Prints the current environment variables.
 In interactive mode:
 
 .nf
-$ ./simple_shell
+$ ./hsh
 $ ls -l
 $ env
 $ exit
@@ -48,19 +49,17 @@ $ exit
 In non-interactive mode:
 
 .nf
-echo "ls -la" | ./simple_shell
+$ echo "ls -la" | ./hsh
 .fi
 
 .SH EXIT STATUS
-Upon successful execution of a command, the exit status of the last process
-is returned.
+On successful execution, the shell returns the exit status of the last executed
+command.
 
-If a command is not found, the shell prints an error message similar
-to:
+If a command is not found, the shell prints an error message similar to:
 
-.nf
+.PP
 ./hsh: 1: command: not found
-.fi
 
 .SH ERRORS
 The behavior is undefined if:
@@ -73,5 +72,5 @@ Input exceeds the maximum supported length.
 .SH SEE ALSO
 sh(1), bash(1)
 
-.SH AUTHOR
+.SH AUTHORS
 Lorenzo Anselme and Ethane Zimmermann
